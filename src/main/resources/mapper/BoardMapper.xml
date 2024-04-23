@@ -15,4 +15,38 @@
         WHERE
             board_no = #{boardNo}
     </select>
+
+    <select id="selectAll" parameterType="String" resultType="Board">
+        SELECT
+            board_no
+            ,title
+            ,content
+            ,author
+            ,password
+            ,created_dt
+            ,updated_dt
+            ,views
+        FROM
+            t_board
+        WHERE
+            title LIKE CONCAT('%',#{keyword},'%')
+    </select>
+    <select id="insertOne" parameterType="BoardRequestDto" resultType="Integer">
+        INSERT INTO t_board
+            (
+                title
+                ,content
+                ,author
+                ,password
+                ,views
+            )
+        VALUE
+            (
+                '#{title}'
+                ,#{content}
+                ,#{author}
+                ,#{password}
+                ,#{views}
+            )
+    </select>
 </mapper>
