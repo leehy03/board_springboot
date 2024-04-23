@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.hy.board.repository.mapper.BoardMapper">
+    <select id="selectOne" parameterType="int" resultType="Board">
+        SELECT
+            board_no
+            ,title
+            ,content
+            ,author
+            ,password
+            ,created_dt
+            ,updated_dt
+            ,views
+        FROM
+            t_board
+        WHERE
+            board_no = #{boardNo}
+    </select>
+</mapper>
