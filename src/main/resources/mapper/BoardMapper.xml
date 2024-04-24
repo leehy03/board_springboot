@@ -31,7 +31,8 @@
         WHERE
             title LIKE CONCAT('%',#{keyword},'%')
     </select>
-    <select id="insertOne" parameterType="BoardRequestDto" resultType="Integer">
+
+    <insert id="insertOne" parameterType="BoardRequestDto">
         INSERT INTO t_board
             (
                 title
@@ -42,11 +43,28 @@
             )
         VALUE
             (
-                '#{title}'
+                #{title}
                 ,#{content}
                 ,#{author}
                 ,#{password}
                 ,#{views}
             )
-    </select>
+    </insert>
+
+    <update id="updateOne" parameterType="BoardRequestDto">
+        UPDATE t_board
+        SET
+            title = #{title}
+            ,content = #{content}
+            ,author = #{author}
+            ,password = #{password}
+        WHERE
+            board_no = #{boardNo}
+    </update>
+
+    <delete id="deleteOne" parameterType="int">
+        DELETE FROM t_board
+        WHERE
+            board_no = #{boardNo}
+    </delete>
 </mapper>

@@ -42,4 +42,25 @@ public class BoardService {
     public Integer createBoard(BoardRequestDto request) {
         return boardMapper.insertOne(request);
     }
+
+    /**
+     * 게시글 수정 서비스
+     *
+     * @param request BoardRequestDto
+     * @return Integer
+     */
+    public Integer modifyBoard(BoardRequestDto request) {
+        return boardMapper.updateOne(request);
+    }
+
+    /**
+     * 게시글 삭제 서비스
+     *
+     * @param boardNo int
+     * @return Integer
+     */
+    public Integer removeBoard(int boardNo) {
+        return boardMapper.deleteOne(boardNo);
+    }
+
 }

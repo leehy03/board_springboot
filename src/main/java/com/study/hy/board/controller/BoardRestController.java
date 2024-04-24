@@ -42,7 +42,7 @@ public class BoardRestController {
      * 게시글 작성 API
      *
      * @param request BoardRequestDto
-     * @return Integer
+     * @return ResponseEntity 성공 시 1, 실패 시 null 반환
      */
     @PostMapping("/boards")
     public ResponseEntity<?> createBoard(@RequestBody BoardRequestDto request) {
@@ -50,13 +50,27 @@ public class BoardRestController {
         return ResponseEntity.ok().body(insertedCount);
     }
 
+    /**
+     * 게시글 수정 API
+     *
+     * @param request BoardRequestDto
+     * @return ResponseEntity
+     */
     @PutMapping("/boards")
-    public ResponseEntity<?> updateBoard(BoardRequestDto request) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> modifyBoard(@RequestBody BoardRequestDto request) {
+        Integer updatedCount = boardService.modifyBoard(request);
+        return ResponseEntity.ok().body(updatedCount);
     }
 
+    /**
+     * 게시글 삭제 API
+     *
+     * @param boardNo BoardRequestDto
+     * @return ResponseEntity
+     */
     @DeleteMapping("/boards")
-    public ResponseEntity<?> removeBoard(BoardRequestDto request) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> removeBoard(@RequestParam("no") int boardNo) {
+        Integer deletedCount = boardService.removeBoard(boardNo);
+        return ResponseEntity.ok().body(deletedCount);
     }
 }
