@@ -16,11 +16,14 @@ public class BoardService {
     /**
      * 게시글 목록 조회 서비스
      *
-     * @param keyword string 게시글
-     * @return List<Board>
+     * @param currentPage int 조회 페이지 (default value = 1)
+     * @param keyword string 게시글 제목
+     * @param type string 검색키워드 타입 (title or author)
+     * @return List
      */
-    public List<Board> getBoardList(String keyword) {
-        return boardMapper.selectAll(keyword);
+    public List<Board> getBoardList(int currentPage, String keyword, String type) {
+        //TODO. 페이징 기능 구현하기
+        return boardMapper.selectAll(keyword,type);
     }
 
     /**
@@ -30,6 +33,7 @@ public class BoardService {
      * @return Board
      */
     public Board getBoard(int boardNo) {
+        boardMapper.updateView(boardNo);
         return boardMapper.selectOne(boardNo);
     }
 

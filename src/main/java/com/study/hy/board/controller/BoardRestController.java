@@ -4,11 +4,13 @@ import com.study.hy.board.domain.Board;
 import com.study.hy.board.dto.BoardRequestDto;
 import com.study.hy.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class BoardRestController {
@@ -21,8 +23,12 @@ public class BoardRestController {
      * @return ResponseEntity
      */
     @GetMapping("/boards/list")
-    public ResponseEntity<?> getBoardList(@RequestParam(required = false, value = "keyword") String keyword) {
-        List<Board> boardList = boardService.getBoardList(keyword);
+    public ResponseEntity<?> getBoardList(
+            @RequestParam(required = false, value = "keyword") String keyword,
+            @RequestParam(required = false, value = "type") String type,
+            @RequestParam(value = "page", defaultValue = "1") int currentPage
+    ) {
+        List<Board> boardList = boardService.getBoardList(currentPage, keyword, type);
         return ResponseEntity.ok().body(boardList);
     }
 
@@ -34,6 +40,7 @@ public class BoardRestController {
      */
     @GetMapping("/boards")
     public ResponseEntity<?> getBoard(@RequestParam("no") int boardNo) {
+        log.info("boardNo is {}", boardNo);
         Board board = boardService.getBoard(boardNo);
         return ResponseEntity.ok().body(board);
     }
@@ -46,6 +53,7 @@ public class BoardRestController {
      */
     @PostMapping("/boards")
     public ResponseEntity<?> createBoard(@RequestBody BoardRequestDto request) {
+        log.info("request is {}", request);
         Integer insertedCount = boardService.createBoard(request);
         return ResponseEntity.ok().body(insertedCount);
     }
@@ -58,6 +66,7 @@ public class BoardRestController {
      */
     @PutMapping("/boards")
     public ResponseEntity<?> modifyBoard(@RequestBody BoardRequestDto request) {
+        log.info("request is {}", request);
         Integer updatedCount = boardService.modifyBoard(request);
         return ResponseEntity.ok().body(updatedCount);
     }

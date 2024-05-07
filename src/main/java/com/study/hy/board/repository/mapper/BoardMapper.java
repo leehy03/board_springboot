@@ -13,9 +13,10 @@ public interface BoardMapper {
      * BoardMapper.selectAll
      *
      * @param keyword String
+     * @param type String
      * @return List
      */
-    List<Board> selectAll(String keyword);
+    List<Board> selectAll(String keyword, String type);
 
     /**
      * BoardMapper.selectOne
@@ -24,6 +25,9 @@ public interface BoardMapper {
      * @return Board
      */
     Board selectOne(int boardNo);
+
+    Integer updateView(int boardNo);
+
 
     /**
      * BoardMapper.insertOne
