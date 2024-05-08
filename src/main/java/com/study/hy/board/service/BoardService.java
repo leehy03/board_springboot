@@ -17,8 +17,8 @@ public class BoardService {
      * 게시글 목록 조회 서비스
      *
      * @param currentPage int 조회 페이지 (default value = 1)
-     * @param keyword string 게시글 제목
-     * @param type string 검색키워드 타입 (title or author)
+     * @param keyword String 검색 키워드
+     * @param type String 검색키워드 타입 (title or author)
      * @return List
      */
     public List<Board> getBoardList(int currentPage, String keyword, String type) {

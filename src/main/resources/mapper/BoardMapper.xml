@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.study.hy.board.repository.mapper.BoardMapper">
     <select id="selectOne" parameterType="int" resultType="Board">
+        /* BoardMapper.selectOne */
         SELECT
             board_no
             ,title
@@ -17,6 +18,7 @@
     </select>
 
     <select id="selectAll" parameterType="String" resultType="Board">
+        /* BoardMapper.selectAll */
         SELECT
             board_no
             ,title
@@ -28,11 +30,20 @@
             ,views
         FROM
             t_board
-        WHERE
-            title LIKE CONCAT('%',#{keyword},'%')
+        <where>
+            <if test="keyword != '' and keyword != null">
+                <choose>
+                    <when test="'title'.equals(type)"> AND title LIKE CONCAT('%',#{keyword},'%') </when>
+                    <when test="'author'.equals(type)"> AND author LIKE CONCAT('%',#{keyword},'%') </when>
+                </choose>
+            </if>
+        </where>
+        ORDER BY board_no DESC
+
     </select>
 
     <insert id="insertOne" parameterType="BoardRequestDto">
+        /* BoardMapper.insertOne */
         INSERT INTO t_board
             (
                 title
@@ -47,17 +58,27 @@
                 ,#{content}
                 ,#{author}
                 ,#{password}
-                ,#{views}
+                ,'0'
             )
     </insert>
 
     <update id="updateOne" parameterType="BoardRequestDto">
+        /* BoardMapper.updateOne */
         UPDATE t_board
         SET
             title = #{title}
             ,content = #{content}
             ,author = #{author}
             ,password = #{password}
+        WHERE
+            board_no = #{boardNo}
+    </update>
+
+    <update id="updateView" parameterType="BoardRequestDto">
+        /* BoardMapper.updateView */
+        UPDATE t_board
+        SET
+            views = views + 1
         WHERE
             board_no = #{boardNo}
     </update>

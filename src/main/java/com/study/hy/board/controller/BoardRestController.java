@@ -19,7 +19,8 @@ public class BoardRestController {
     /**
      * 게시글 목록 조회 API
      *
-     * @param keyword String 제목 포함 검색 키워드
+     * @param keyword String 검색 키워드
+     * @param type String 검색키워드 타입 (title or author)
      * @return ResponseEntity
      */
     @GetMapping("/boards/list")
