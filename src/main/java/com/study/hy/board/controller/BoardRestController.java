@@ -20,7 +20,7 @@ public class BoardRestController {
      * 게시글 목록 조회 API
      *
      * @param keyword String 검색 키워드
-     * @param type String 검색키워드 타입 (title or author)
+     * @param type    String 검색키워드 타입 (title or author)
      * @return ResponseEntity
      */
     @GetMapping("/boards/list")
@@ -37,12 +37,13 @@ public class BoardRestController {
      * 게시글 상세 조회 API
      *
      * @param boardNo int 게시글 PK
+     * @param page String page 조회수 증가 메서드 호출 분기 처리를 위한 변수
      * @return ResponseEntity
      */
     @GetMapping("/boards")
-    public ResponseEntity<?> getBoard(@RequestParam("no") int boardNo) {
-        log.info("boardNo is {}", boardNo);
-        Board board = boardService.getBoard(boardNo);
+    public ResponseEntity<?> getBoard(@RequestParam("no") int boardNo, @RequestParam("page") String page) {
+        log.info("boardNo is {} from {}", boardNo, page);
+        Board board = boardService.getBoard(boardNo, page);
         return ResponseEntity.ok().body(board);
     }
 

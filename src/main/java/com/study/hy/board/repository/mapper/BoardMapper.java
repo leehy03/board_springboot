@@ -26,6 +26,12 @@ public interface BoardMapper {
      */
     Board selectOne(int boardNo);
 
+    /**
+     * BoardMapper.updateView
+     *
+     * @param boardNo int
+     * @return Integer
+     */
     Integer updateView(int boardNo);
 
 
