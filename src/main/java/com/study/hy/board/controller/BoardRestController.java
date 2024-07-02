@@ -27,9 +27,9 @@ public class BoardRestController {
     public ResponseEntity<?> getBoardList(
             @RequestParam(required = false, value = "keyword") String keyword,
             @RequestParam(required = false, value = "type") String type,
-            @RequestParam(value = "page", defaultValue = "1") int currentPage
+            @RequestParam(value = "page", defaultValue = "1") int page
     ) {
-        List<Board> boardList = boardService.getBoardList(currentPage, keyword, type);
+        List<Board> boardList = boardService.getBoardList(page, keyword, type);
         return ResponseEntity.ok().body(boardList);
     }
 
@@ -37,13 +37,13 @@ public class BoardRestController {
      * 게시글 상세 조회 API
      *
      * @param boardNo int 게시글 PK
-     * @param page String page 조회수 증가 메서드 호출 분기 처리를 위한 변수
+     * @param departure String 조회수 증가 메서드 호출 분기 처리를 위한 변수
      * @return ResponseEntity
      */
     @GetMapping("/boards")
-    public ResponseEntity<?> getBoard(@RequestParam("no") int boardNo, @RequestParam("page") String page) {
-        log.info("boardNo is {} from {}", boardNo, page);
-        Board board = boardService.getBoard(boardNo, page);
+    public ResponseEntity<?> getBoard(@RequestParam("no") int boardNo, @RequestParam("departure") String departure) {
+        log.info("boardNo is {} from {}", boardNo, departure);
+        Board board = boardService.getBoard(boardNo, departure);
         return ResponseEntity.ok().body(board);
     }
 
