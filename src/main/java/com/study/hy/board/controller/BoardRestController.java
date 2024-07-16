@@ -1,14 +1,13 @@
 package com.study.hy.board.controller;
 
-import com.study.hy.board.domain.Board;
-import com.study.hy.board.dto.BoardRequestDto;
+import com.study.hy.board.model.entity.Board;
+import com.study.hy.board.model.dto.BoardRequestDto;
+import com.study.hy.board.model.vo.PageVo;
 import com.study.hy.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -19,24 +18,27 @@ public class BoardRestController {
     /**
      * 게시글 목록 조회 API
      *
-     * @param keyword String 검색 키워드
-     * @param type    String 검색키워드 타입 (title or author)
+     * @param currentPage int 현재페이지
+     * @param pageSize    int 페이지 사이즈
+     * @param keyword     String 검색 키워드
+     * @param type        String 검색키워드 타입 (title or author)
      * @return ResponseEntity
      */
     @GetMapping("/boards/list")
     public ResponseEntity<?> getBoardList(
             @RequestParam(required = false, value = "keyword") String keyword,
             @RequestParam(required = false, value = "type") String type,
-            @RequestParam(value = "page", defaultValue = "1") int page
-    ) {
-        List<Board> boardList = boardService.getBoardList(page, keyword, type);
-        return ResponseEntity.ok().body(boardList);
+            @RequestParam("currentPage") int currentPage,
+            @RequestParam("pageSize") int pageSize
+            ) {
+        PageVo result = boardService.getBoardList(currentPage, pageSize, keyword, type);
+        return ResponseEntity.ok().body(result);
     }
 
     /**
      * 게시글 상세 조회 API
      *
-     * @param boardNo int 게시글 PK
+     * @param boardNo   int 게시글 PK
      * @param departure String 조회수 증가 메서드 호출 분기 처리를 위한 변수
      * @return ResponseEntity
      */

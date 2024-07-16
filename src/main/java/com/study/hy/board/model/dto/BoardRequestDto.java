@@ -1,20 +1,21 @@
-package com.study.hy.board.domain;
+package com.study.hy.board.model.dto;
 
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
-
-@Setter
 @Getter
+@Setter
 @ToString
-public class Comment {
-    private int commentNo;
-    private String comment;
+public class BoardRequestDto {
+    private int boardNo;
+    private String title;
+    private String content;
     private String author;
     private String password;
     private LocalDateTime createdDt;
     private LocalDateTime updatedDt;
-    private int boardNo;
+    private int views;
 }
+

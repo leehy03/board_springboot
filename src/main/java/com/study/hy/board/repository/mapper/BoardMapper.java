@@ -1,7 +1,7 @@
 package com.study.hy.board.repository.mapper;
 
-import com.study.hy.board.domain.Board;
-import com.study.hy.board.dto.BoardRequestDto;
+import com.study.hy.board.model.entity.Board;
+import com.study.hy.board.model.dto.BoardRequestDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -14,9 +14,11 @@ public interface BoardMapper {
      *
      * @param keyword String
      * @param type String
+     * @param offset int
+     * @param pageSize int
      * @return List
      */
-    List<Board> selectAll(String keyword, String type);
+    List<Board> selectAll(String keyword, String type, int offset, int pageSize);
 
     /**
      * BoardMapper.selectOne
@@ -33,7 +35,6 @@ public interface BoardMapper {
      * @return Integer
      */
     Integer updateView(int boardNo);
-
 
     /**
      * BoardMapper.insertOne
@@ -59,4 +60,10 @@ public interface BoardMapper {
      */
     Integer deleteOne(int boardNo);
 
+    /**
+     * BoardMapper.countAll
+     *
+     * @return Integer
+     */
+    int countAll();
 }

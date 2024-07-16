@@ -32,6 +32,19 @@
             t_comment
         WHERE
             board_no = #{boardNo}
+        ORDER BY comment_no ASC
+        LIMIT #{pageSize}
+        OFFSET #{offset}
+    </select>
+
+    <select id="countAll" resultType="Integer">
+        /* CommentMapper.countAll */
+        SELECT
+            COUNT(1)
+        FROM
+            t_comment
+        WHERE
+            board_no = #{boardNo}
     </select>
 
     <delete id="deleteOne" parameterType="int">

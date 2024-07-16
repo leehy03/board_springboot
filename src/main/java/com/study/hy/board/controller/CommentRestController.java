@@ -1,14 +1,13 @@
 package com.study.hy.board.controller;
 
-import com.study.hy.board.domain.Comment;
-import com.study.hy.board.dto.CommentRequestDto;
+import com.study.hy.board.model.dto.CommentRequestDto;
+import com.study.hy.board.model.vo.PageVo;
 import com.study.hy.board.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -20,14 +19,19 @@ public class CommentRestController {
     /**
      * 댓글 목록 조회 API
      *
-     * @param boardNo int 게시글 PK
+     * @param currentPage int 현재페이지
+     * @param pageSize    int 페이지 사이즈
+     * @param boardNo     int 게시글 PK
      * @return ResponseEntity
      */
     @GetMapping("/comments/list")
-    public ResponseEntity<?> getCommentList(@RequestParam("no") int boardNo) {
+    public ResponseEntity<?> getCommentList(
+            @RequestParam("no") int boardNo,
+            @RequestParam("currentPage") int currentPage,
+            @RequestParam("pageSize") int pageSize) {
         log.info("boardNo is {} ", boardNo);
-        List<Comment> commentList = commentService.getCommentList(boardNo);
-        return ResponseEntity.ok().body(commentList);
+        PageVo result = commentService.getCommentList(boardNo, currentPage, pageSize);
+        return ResponseEntity.ok().body(result);
     }
 
     /**

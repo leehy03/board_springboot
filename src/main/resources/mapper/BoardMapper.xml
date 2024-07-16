@@ -17,6 +17,14 @@
             board_no = #{boardNo}
     </select>
 
+    <select id="countAll" resultType="Integer">
+        /* BoardMapper.countAll */
+        SELECT
+            COUNT(1)
+        FROM
+            t_board
+    </select>
+
     <select id="selectAll" parameterType="String" resultType="Board">
         /* BoardMapper.selectAll */
         SELECT
@@ -39,7 +47,8 @@
             </if>
         </where>
         ORDER BY board_no DESC
-
+        LIMIT #{pageSize}
+        OFFSET #{offset}
     </select>
 
     <insert id="insertOne" parameterType="BoardRequestDto">
@@ -84,6 +93,7 @@
     </update>
 
     <delete id="deleteOne" parameterType="int">
+        /* BoardMapper.deleteOne */
         DELETE FROM t_board
         WHERE
             board_no = #{boardNo}

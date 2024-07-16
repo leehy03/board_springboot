@@ -1,8 +1,7 @@
 package com.study.hy.board.repository.mapper;
 
-import com.study.hy.board.domain.Comment;
-import com.study.hy.board.dto.BoardRequestDto;
-import com.study.hy.board.dto.CommentRequestDto;
+import com.study.hy.board.model.entity.Comment;
+import com.study.hy.board.model.dto.CommentRequestDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,9 +21,11 @@ public interface CommentMapper {
      * CommentMapper.selectAll
      *
      * @param boardNo int
+     * @param offset int
+     * @param pageSize int
      * @return List
      */
-    List<Comment> selectAll(int boardNo);
+    List<Comment> selectAll(int boardNo, int offset, int pageSize);
 
     /**
      * CommentMapper.deleteOne
@@ -33,4 +34,12 @@ public interface CommentMapper {
      * @return Integer
      */
     Integer deleteOne(int commentNo);
+
+    /**
+     * CommentMapper.countAll
+     *
+     * @param boardNo int
+     * @return Integer
+     */
+    int countAll(int boardNo);
 }

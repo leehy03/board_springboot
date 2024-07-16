@@ -1,12 +1,15 @@
 package com.study.hy.board.service;
 
-import com.study.hy.board.domain.Board;
-import com.study.hy.board.dto.BoardRequestDto;
+import com.study.hy.board.model.entity.Board;
+import com.study.hy.board.model.dto.BoardRequestDto;
+import com.study.hy.board.model.vo.PageVo;
 import com.study.hy.board.repository.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.study.hy.board.util.PageUtil.getOffset;
 
 @Service
 @RequiredArgsConstructor
@@ -16,14 +19,19 @@ public class BoardService {
     /**
      * 게시글 목록 조회 서비스
      *
-     * @param page int 조회 페이지 (default value = 1)
+     * @param currentPage int 조회 페이지 (default value = 1)
+     * @param pageSize    int 페이지사이즈
      * @param keyword     String 검색 키워드
      * @param type        String 검색키워드 타입 (title or author)
-     * @return List
+     * @return PageVo
      */
-    public List<Board> getBoardList(int page, String keyword, String type) {
-        //TODO. 페이징 기능 구현하기
-        return boardMapper.selectAll(keyword, type);
+    public PageVo getBoardList(int currentPage, int pageSize, String keyword, String type) {
+        int totalCount = boardMapper.countAll();
+        int totalPage = totalCount / pageSize;
+        int offset = getOffset(currentPage, pageSize);
+        List<Board> contents = boardMapper.selectAll(keyword, type, offset, pageSize);
+
+        return new PageVo(totalCount, totalPage, currentPage, contents);
     }
 
     /**

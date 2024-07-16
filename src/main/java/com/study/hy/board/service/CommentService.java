@@ -1,13 +1,15 @@
 package com.study.hy.board.service;
 
-import com.study.hy.board.domain.Board;
-import com.study.hy.board.domain.Comment;
-import com.study.hy.board.dto.CommentRequestDto;
+import com.study.hy.board.model.entity.Comment;
+import com.study.hy.board.model.dto.CommentRequestDto;
+import com.study.hy.board.model.vo.PageVo;
 import com.study.hy.board.repository.mapper.CommentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.study.hy.board.util.PageUtil.getOffset;
 
 @Service
 @RequiredArgsConstructor
@@ -29,11 +31,18 @@ public class CommentService {
     /**
      * 댓글 목록 조회 서비스
      *
-     * @param boardNo int 게시글 PK
-     * @return List
+     * @param boardNo     int 게시글 PK
+     * @param currentPage int 조회 페이지 (default value = 1)
+     * @param pageSize    int 페이지사이즈
+     * @return PageVo
      */
-    public List<Comment> getCommentList(int boardNo) {
-        return commentMapper.selectAll(boardNo);
+    public PageVo getCommentList(int boardNo, int currentPage, int pageSize) {
+        int totalCount = commentMapper.countAll(boardNo);
+        int totalPage = totalCount / pageSize;
+        int offset = getOffset(currentPage, pageSize);
+        List<Comment> contents = commentMapper.selectAll(boardNo, offset, pageSize);
+
+        return new PageVo(totalCount, totalPage, currentPage, contents);
     }
 
     /**
